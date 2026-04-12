@@ -10,6 +10,7 @@
 \begin{frame}{What is ROS 2?}
 	\begin{columns}
 		\column{.5\textwidth}
+    \justifying
 		\only<1>{
 			\nolistindent Robot Operating System 2 (ROS 2) is an \textbg{open-source middleware} for robotic applications and software development.\\
 			It allows developers to build and manage \textbg{distributed control architectures} made of many modules, usually referred to as \textbg{nodes}.\\
@@ -39,8 +40,9 @@
 \begin{frame}{Why ROS 2?}
 	\begin{columns}
 		\column{.5\textwidth}
+    \justifying
 		\only<1>{
-			\nolistindent The ROS project started in 2005, to provide a middleware that could solve the \textbg{software integration} and \textbg{communication} problems in robotics. It has evolved much since then.
+      \nolistindent The ROS project started in 2005, to provide a middleware that could solve the \textbg{software integration} and \textbg{communication} problems in robotics. It has evolved much since then.
 			\begin{block}{}
 				\textbf{ROS is not an operating system in the traditional sense of process management and scheduling; rather, it provides a structured communications layer above the host operating systems of a heterogenous compute cluster.}
 			\end{block}
@@ -65,6 +67,7 @@
 
 % --- Main features ---
 \begin{frame}{Main features}
+  \justifying
 	As a middleware, it offers many \textbg{services to roboticists}, including:
 	\begin{itemize}
 		\item \textbg{three communication paradigms}, easy to set up: \textbg{messages}, \textbg{services} and \textbg{actions};
@@ -75,6 +78,7 @@
 	\end{itemize}
 \end{frame}
 \begin{frame}{Main features}
+  \justifying
 	\begin{itemize}
 		\item may be integrated in some \textbg{simulators} (\emph{e.g.}, Gazebo) and \textbg{visualizers} (\emph{e.g.}, RViz).
 	\end{itemize}
@@ -88,6 +92,7 @@
 
 % --- The power of open source ---
 \begin{frame}{The power of open source}
+  \justifying
 	The ROS project aims at establishing a common ground for the \textbg{development} of robotics just like what happened in the \textbg{software industry} in the last 30 years.\\
 	\bigskip
 	By \textbg{reusing code} and implementing \textbg{open hardware}, \textbg{building} a functioning robot may be only a matter of installing software, then writing four kinds of \textbg{text files}:
@@ -104,6 +109,7 @@
 
 % --- Application Programming Interface ---
 \begin{frame}{Application Programming Interface}{Deep dive into ROS 2 internals}
+  \justifying
 	A \textbg{ROS 2 installation}, from bottom to top, works as follows:
 	\begin{enumerate}
 		\item \textbg{DDS/Zenoh/TBD}: the middleware that implements the \textbg{communication layer} (many different implementations are supported).
@@ -115,6 +121,7 @@
 	Keep this in mind during debugging, or while looking for information on an API!
 \end{frame}
 \begin{frame}{Application Programming Interface}{How a ROS 2 application works}
+  \justifying
 	The most important entity is the \textbg{node}, whose functionalities are specified upon creation.\\
 	A node must usually do \textbg{a single thing}, being the \textbg{unit} in a \textbg{distributed architecture}.\\
 	With its class methods, it can:
@@ -133,8 +140,10 @@
 
 % --- The RMW abstraction layer ---
 \begin{frame}{The RMW abstraction layer}{Handling communications among nodes transparently}
+  \justifying
 	ROS 2 nodes can either \textbg{publish to} or \textbg{subscribe to} a \textbg{topic}.
 	\begin{block}{Definition of ROS 2 topic}
+    \justifying
 		A ROS 2 topic is \textbf{uniquely identified} by three attributes:
 		\begin{itemize}
 			\item a \textbf{name}, \emph{i.e.}, a human-readable character string;
@@ -159,6 +168,7 @@
 	\end{figure}
 \end{frame}
 \begin{frame}{Executors}{Handling events and callbacks}
+  \justifying
 	\begin{enumerate}
 		\item Middleware functionalities trigger \textbg{(a)synchronous events}.
 		\item Events are handled by \textbg{background jobs}, coded in \textbg{callbacks} by the programmer.
@@ -175,6 +185,7 @@
 \begin{frame}{Limitations}{The devil is in the details}
 	\visible<1->{
 		\begin{alertblock}{ROS 2 main limitations as of today}
+      \justifying
 			The main concerns arise when developing low-level stuff:
 			\begin{itemize}
 				\item \textbr{the RMW layer is almost completely abstracted}, so non-standard network configurations may get tricky (but \textbr{Zenoh} is now helping with this);
@@ -199,6 +210,7 @@
 
 % --- Limitations of the DDS ---
 \begin{frame}{Limitations of the DDS}{The DDS in a multi-agent environment}
+  \justifying
 	Over the years, ROS 2 helped identify some \textbg{flaws} in the \textbg{DDS standard}:
 	\begin{itemize}
 		\item communication with \textbg{large data} (\emph{e.g.}, images, pointclouds...) over a \textbg{lossy network} becomes inefficient or impossible, due to \textbg{retransmission policies};
@@ -213,6 +225,7 @@
   \end{alertblock}
 \end{frame}
 \begin{frame}{Limitations of the DDS}{Abandoning the DDS?}
+  \justifying
   ROS 2 steering committees have considered \textbg{discontinuing the DDS} in favor of \textbg{new solutions}.\\
   The main requirements are:
   \begin{itemize}
@@ -231,6 +244,7 @@
 \begin{frame}{Zenoh}
 	\begin{columns}
 		\column{.5\textwidth}
+    \justifying
 		\textbg{Zenoh} is a new middleware for distributed communication meant as a \textbg{successor of the DDS}.\\
 		It is designed to handle \textbg{three types of data:}
 		\begin{itemize}

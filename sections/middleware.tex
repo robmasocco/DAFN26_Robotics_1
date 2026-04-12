@@ -43,14 +43,18 @@
 % --- Data Distribution Service ---
 \begin{frame}{Data Distribution Service}
 	\begin{block}{Definition of DDS}
+    \justifying
 		The DDS is a \textbf{data-centric communication protocol} used for \textbf{distributed} software application communications, describing APIs and communication semantics between data \textbf{providers} and \textbf{consumers}.
 	\end{block}
 	\begin{block}{Definition of DDS implementation}
+    \justifying
 		A DDS implementation is a \textbf{publish-subscribe middleware} that handles communications between \textbf{real-time} systems and software over the \textbf{network}.
 	\end{block}
+  \justifying
 	It is defined by an \href{https://www.omg.org/spec/DDS/About-DDS/}{\color{blue}{\underline{\textbf{{open standard}}}}} maintained by the \textbg{Object Management Group}.
 \end{frame}
 \begin{frame}{Data Distribution Service}
+  \justifying
 	DDSs are currently used in automotive, aerospace, military, robotics...\\
 	\bigskip
 	The open standard defines:
@@ -72,6 +76,7 @@
 	\end{figure}
 \end{frame}
 \begin{frame}{Data Distribution Service}
+  \justifying
 	An application using the DDS can create one or more \textbg{participants}.\\
 	They represent the access point to the DDS network, and embed a \textbg{QoS policy} specifying:
 	\begin{itemize}
@@ -92,6 +97,7 @@
 	\end{block}
 \end{frame}
 \begin{frame}{Data Distribution Service}{Peeking into the low level}
+  \justifying
 	Communications are implemented below the DDS layer, by the \textbg{Real-Time Publish Subscribe (RTPS)} protocol.\\
 	It defines:
 	\begin{itemize}
