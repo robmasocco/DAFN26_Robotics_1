@@ -1,6 +1,6 @@
 % Section 2 - Middleware in robotics
 % Roberto Masocco <roberto.masocco@uniroma2.it>
-% April 23, 2025
+% April 12, 2026
 
 % ### Middleware in robotics ###
 \section{Middleware in robotics}
@@ -64,6 +64,14 @@
 	Any vendor may add their own extensions to their implementations.
 \end{frame}
 \begin{frame}{Data Distribution Service}
+	\begin{figure}
+		\centering
+		\includegraphics[width=.85\textwidth]{dds_domain}
+		\caption{Scheme of a DDS-based network (data space).}
+		\label{fig:ddsdomain}
+	\end{figure}
+\end{frame}
+\begin{frame}{Data Distribution Service}
 	An application using the DDS can create one or more \textbg{participants}.\\
 	They represent the access point to the DDS network, and embed a \textbg{QoS policy} specifying:
 	\begin{itemize}
@@ -83,22 +91,13 @@
 		\textbf{Communication happens when entities with compatible policies match.}
 	\end{block}
 \end{frame}
-\begin{frame}{Data Distribution Service}
-	\begin{figure}
-		\centering
-		\includegraphics[width=.85\textwidth]{dds_domain}
-		\caption{Scheme of a DDS-based network (data space).}
-		\label{fig:ddsdomain}
-	\end{figure}
-\end{frame}
 \begin{frame}{Data Distribution Service}{Peeking into the low level}
 	Communications are implemented below the DDS layer, by the \textbg{Real-Time Publish Subscribe (RTPS)} protocol.\\
 	It defines:
 	\begin{itemize}
 		\item a \textbg{Discovery Protocol} to automatically find participants over a network in a same domain;
 		\item a \textbg{Wire Protocol} to serialize and deserialize data packets;
-		\item supported mediums and network protocols;
-		\item data exchange semantics: publishing \textbg{changes} of a \textbg{history}.
+		\item supported mediums and network protocols.
 	\end{itemize}
 	\bigskip
 	All the entities appear to the application programmer as \textbg{objects} in the code.

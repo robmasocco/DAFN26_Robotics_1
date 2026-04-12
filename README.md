@@ -1,6 +1,6 @@
-# DAFN25_Robotics_1
+# DAFN26_Robotics_1
 
-DAFN 2025 - Robotics 1: Roboticist 101 - Software and middleware for robotics
+DAFN 2026 - Robotics 1: Roboticist 101 - Software and middleware for robotics
 
 LaTeX source code and build files.
 

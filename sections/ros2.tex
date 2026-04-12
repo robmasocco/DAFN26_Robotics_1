@@ -1,6 +1,6 @@
 % Section 3 - ROS 2 overview
 % Roberto Masocco <roberto.masocco@uniroma2.it>
-% April 23, 2025
+% April 12, 2026
 
 % ### ROS 2 overview ###
 \section{ROS 2 overview}
@@ -11,13 +11,13 @@
 	\begin{columns}
 		\column{.5\textwidth}
 		\only<1>{
-			\nolistindent ROS 2 is a \textbg{DDS-based} (for now!), \textbg{open-source} middleware for robotic applications and software development.\\
+			\nolistindent Robot Operating System 2 (ROS 2) is an \textbg{open-source middleware} for robotic applications and software development.\\
 			It allows developers to build and manage \textbg{distributed control architectures} made of many modules, usually referred to as \textbg{nodes}.\\
 			\bigskip
-			Its default DDS implementation is currently \textbg{Fast DDS} from \textbg{eProsima}.
+			Its \textbg{communication services} are implemented \textbg{on top of dedicated middleware} such as the DDS denoted ROS MiddleWare (RMW).
 		}
 		\only<2>{
-			\nolistindent \nolistindent ROS 2 currently supports \textbg{C++} and \textbg{Python} for application programming, and runs natively on \textbg{Ubuntu Linux 24.04}.
+			\nolistindent \nolistindent ROS 2 currently supports \textbg{C++} and \textbg{Python} for application programming, and runs natively on many \textbg{Linux distros} such as Ubuntu Linux 24.04.
 			\newline\newline
 			New versions are periodically released as \textbg{distributions}: the current LTS one is \textbg{Jazzy Jalisco}; the development version is \textbg{Rolling Ridley} and can only be compiled from source.\\
 			It is available as \textbg{binary \texttt{deb} packages} for \texttt{x86} and \texttt{ARMv8} architectures.
@@ -50,7 +50,7 @@
 			\nolistindent\nolistindent ROS 2 helps to design and build \textbg{distributed control architectures}, providing a common ground for the \textbg{integration} of different systems, sensors, actuators, and algorithms.\\
 			It is a common framework for the development of \textbg{robotics software}.
 			\newline\newline
-			Its adoption is still limited because of familiarity with the original ROS, but it is \textbg{growing}.
+			Its adoption is now widespread, making it a standard for robotics software.
 		}
 
 		\column{.5\textwidth}
@@ -67,7 +67,7 @@
 \begin{frame}{Main features}
 	As a middleware, it offers many \textbg{services to roboticists}, including:
 	\begin{itemize}
-		\item \textbg{three communication paradigms}, easy to set up and based on the DDS (for now!): \textbg{messages}, \textbg{services} and \textbg{actions};
+		\item \textbg{three communication paradigms}, easy to set up: \textbg{messages}, \textbg{services} and \textbg{actions};
 		\item organization of software packages, allowing for \textbg{redistribution and code reuse}, thanks to the \textbg{\texttt{colcon}} package manager;
 		\item module configuration tools: \textbg{node parameters} and \textbg{launch files};
 		\item integrated \textbg{logging subsystem} (involves both console and log files);
@@ -99,15 +99,15 @@
 	\end{itemize}
 	even without a single line of code!\\
 	\bigskip
-	Open source enables quick \textbg{diffusion} and \textbg{improvement}, even on the \textbg{security} side, although new threats are rising: see the recent \href{https://en.wikipedia.org/wiki/XZ_Utils_backdoor}{\color{blue}\underline{\texttt{xz} backdoor}} case.
+	Open source enables quick \textbg{diffusion} and \textbg{improvement}, even on the \textbg{security} side, although \textbg{new threats are rising}: see the recent \href{https://en.wikipedia.org/wiki/XZ_Utils_backdoor}{\color{blue}\underline{\texttt{xz} backdoor}} case or the many compromised \texttt{npm} packages.
 \end{frame}
 
 % --- Application Programming Interface ---
 \begin{frame}{Application Programming Interface}{Deep dive into ROS 2 internals}
 	A \textbg{ROS 2 installation}, from bottom to top, works as follows:
 	\begin{enumerate}
-		\item \textbg{DDS}: the middleware that implements the \textbg{communication layer} (many different implementations are supported) (for now!).
-		\item \textbg{RMW}: ROS MiddleWare, is the \textbg{DDS abstraction layer}, which allows to use different DDS implementations without changing the application code.
+		\item \textbg{DDS/Zenoh/TBD}: the middleware that implements the \textbg{communication layer} (many different implementations are supported).
+		\item \textbg{RMW}: ROS MiddleWare, is the \textbg{abstraction layer} which allows to use different communication middleware without changing the application code.
 		\item \textbg{rcl}: ROS Client Support Library (C), implements basic entities: \textbg{nodes}, \textbg{publishers}, \textbg{subscribers}, \textbg{services}, \textbg{clients}, and \textbg{timers}.
 		\item \textbg{rclc}/\textbg{rclcpp}/\textbg{rclpy}: ROS Client Library (C/C++/Python), implements the same entities as \texttt{rcl}, plus extended functionalities like the \textbg{executor}: a job scheduler.
 	\end{enumerate}
@@ -129,6 +129,24 @@
 		\centering
 		\textbf{Nodes are just objects in your application: they can embed any kind of software module, but they do not limit your design to their paradigms.}
 	\end{block}
+\end{frame}
+
+% --- The RMW abstraction layer ---
+\begin{frame}{The RMW abstraction layer}{Handling communications among nodes transparently}
+	ROS 2 nodes can either \textbg{publish to} or \textbg{subscribe to} a \textbg{topic}.
+	\begin{block}{Definition of ROS 2 topic}
+		A ROS 2 topic is \textbf{uniquely identified} by three attributes:
+		\begin{itemize}
+			\item a \textbf{name}, \emph{i.e.}, a human-readable character string;
+			\item an \textbf{interface}, \emph{i.e.}, a custom packet format that specifies what data is carried over it (\emph{e.g.}, strings, numbers, arrays...);
+			\item a \textbf{QoS policy} that specifies how transmissions should be performed.
+		\end{itemize}
+	\end{block}
+	\begin{block}{}
+		\centering
+		\textbf{Changing even only one of the above results in a completely different topic!}
+	\end{block}
+  This is a simplification over, \emph{e.g.}, the DDS model.
 \end{frame}
 
 % --- Executors: events and callbacks ---
@@ -153,51 +171,49 @@
 	\end{alertblock}
 \end{frame}
 
-% --- Flaws ---
-\begin{frame}{Flaws}{The devil is in the details}
+% --- Limitations ---
+\begin{frame}{Limitations}{The devil is in the details}
 	\visible<1->{
-		\begin{alertblock}{ROS 2 main design flaws as of today}
+		\begin{alertblock}{ROS 2 main limitations as of today}
 			The main concerns arise when developing low-level stuff:
 			\begin{itemize}
-				\item \textbr{the DDS/RMW layer is almost completely abstracted}, so non-standard network or DDS configurations may get tricky;
-				\item the internal job scheduling algorithm (namely the \textbr{executor}) is \textbr{not suited for hard real-time applications} because of its \textbr{non-preemptive} nature.
+				\item \textbr{the RMW layer is almost completely abstracted}, so non-standard network configurations may get tricky (but \textbr{Zenoh} is now helping with this);
+				\item the internal job scheduling algorithm (namely the \textbr{executor}) is \textbr{not suited for hard real-time applications}.
 			\end{itemize}
 		\end{alertblock}
 	}
-	\visible<2>{
-		What to do when development gets to a really low level?
-		\begin{itemize}
-			\item Hand off stuff to dedicated \textbg{microcontrollers}.
-			\item Use \textbg{micro-ROS}: hard real-time ROS 2 on microcontrollers and different communication interfaces.
-		\end{itemize}
+  \only<1>{
+    ROS software is meant to be executed on \textbg{onboard, companion} embedded computers (SBCs) which are \textbg{not subject to real-time or criticality constraints}.
+  }
+	\only<2>{
+    \begin{block}{}
+      \centering
+      \textbf{
+        \nolistindent What to do when development gets to a really low level?\\
+        Hand off functionalities to dedicated microcontrollers or PLCs.
+      }
+    \end{block}
+    This is a \textbg{classic design paradigm} that allows \textbg{certifiability}.
 	}
 \end{frame}
-\begin{frame}{Flaws}{The DDS layer abstraction}
-	ROS 2 nodes can either \textbg{publish to} or \textbg{subscribe to} a \textbg{topic}.
-	\begin{block}{Definition of ROS 2 topic}
-		A ROS 2 topic is \textbf{uniquely identified} by three attributes:
-		\begin{itemize}
-			\item a \textbf{name}, \emph{i.e.}, a human-readable character string;
-			\item an \textbf{interface}, \emph{i.e.}, a custom packet format that specifies what data is carried over it (\emph{e.g.}, strings, numbers, arrays...);
-			\item a \textbf{single QoS policy} that specifies how transmissions should be performed.
-		\end{itemize}
-	\end{block}
-	\begin{block}{}
-		\centering
-		\textbf{Changing even only one of the above results in a completely different topic!}
-	\end{block}
-	Compare this to the DDS way of setting up a communication channel between two applications...
-\end{frame}
-\begin{frame}{Flaws}{The DDS in a multi-agent environment}
+
+% --- Limitations of the DDS ---
+\begin{frame}{Limitations of the DDS}{The DDS in a multi-agent environment}
 	Over the years, ROS 2 helped identify some \textbg{flaws} in the \textbg{DDS standard}:
 	\begin{itemize}
 		\item communication with \textbg{large data} (\emph{e.g.}, images, pointclouds...) over a \textbg{lossy network} becomes inefficient or impossible, due to \textbg{retransmission policies};
-		\item \textbg{discovery} of \textbg{many endpoints}, especially over a \textbg{lossy network}, may become slow or \textbg{clog} the network completely, due to the amount of generated \textbg{traffic}.
+		\item \textbg{discovery} of \textbg{many endpoints}, especially over a \textbg{lossy network}, may become slow or \textbg{clog} the network completely, due to the amount of generated \textbg{multicast traffic}.
 	\end{itemize}
-	Just think about a \textbg{swarm} of drones, each one cameras and the like, trying to communicate over a \textbg{wireless network}...
+	Just think about a \textbg{swarm} of drones, each one cameras and the like, trying to communicate over a \textbg{wireless network}...\\
+  \begin{alertblock}{}
+    \centering
+    \textbr{
+      The DDS has been developed for industrial, wired networks well before concepts such as WiFi, IoT, or edge computing became mainstream.
+    }
+  \end{alertblock}
 \end{frame}
-\begin{frame}{Flaws}{Abandoning the DDS?}
-  ROS 2 steering committees are considering the \textbg{abandonment} of the DDS middleware in favor of \textbg{new solutions}.\\
+\begin{frame}{Limitations of the DDS}{Abandoning the DDS?}
+  ROS 2 steering committees have considered \textbg{discontinuing the DDS} in favor of \textbg{new solutions}.\\
   The main requirements are:
   \begin{itemize}
     \item \textbg{scalability}, especially with entity queries;
@@ -206,7 +222,9 @@
     \item \textbg{optimization of data transfers}.
   \end{itemize}
   \bigskip
-  The newest LTS version, \textbg{Jazzy Jalisco}, is the first one to ship with a RMW based on the \href{https://zenoh.io/}{\color{blue}\textbf{\underline{Zenoh}}} middleware.
+  The latest LTS distribution, \textbg{Jazzy Jalisco}, is the first one to support the \href{https://zenoh.io/}{\color{blue}\textbf{\underline{Zenoh}}} middleware.\\
+  \smallskip
+  The DDS remains the default RMW implementation to ensure compatibility with existing software stacks, in the form of eProsima's Fast DDS.
 \end{frame}
 
 % --- Zenoh ---
@@ -214,13 +232,13 @@
 	\begin{columns}
 		\column{.5\textwidth}
 		\textbg{Zenoh} is a new middleware for distributed communication meant as a \textbg{successor of the DDS}.\\
-		It is designed to handle \textbg{three main types of data:}
+		It is designed to handle \textbg{three types of data:}
 		\begin{itemize}
-			\item \textbg{data in motion} that is being transmitted over the network;
-			\item \textbg{data at rest} that is stored in a device and can be retrieved at any time;
-			\item \textbg{data for computations} as in remote procedure calls.
+			\item \textbg{data in motion} that is being transmitted over the network (\emph{e.g.}, topics);
+			\item \textbg{data at rest} that is stored in a device and can be retrieved at any time (\emph{e.g.}, databases);
+			\item \textbg{data for computations} as in remote procedure calls (RPCs).
 		\end{itemize}
-		It relies on a \textbg{router daemon} (\texttt{zenohd}).
+		It relies on a \textbg{configurable router daemon} named \texttt{zenohd}.
 
 		\column{.5\textwidth}
 		\begin{figure}
@@ -236,6 +254,6 @@
 		\centering
 		\includegraphics[width=.45\textwidth]{zenoh_networks}
 		\label{fig:zenohnets}
-		\caption{Possible network configurations in Zenoh.}
+		\caption{Possible Zenoh network configurations.}
 	\end{figure}
 \end{frame}

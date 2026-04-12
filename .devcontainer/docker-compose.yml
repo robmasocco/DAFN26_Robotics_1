@@ -5,8 +5,6 @@
 #
 # January 24, 2023
 
-version: "3.9"
-
 services:
   latex-env:
     image: intelligentsystemslabutv/latex-env:latest
@@ -24,7 +22,6 @@ services:
       - ~/.ssh:/home/latex/.ssh
       - ~/.gitconfig:/home/latex/.gitconfig
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ../:/home/latex/workspace
 
   latex-dev:
@@ -43,5 +40,5 @@ services:
       - ~/.ssh:/home/latex/.ssh
       - ~/.gitconfig:/home/latex/.gitconfig
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - ../:/home/latex/workspace
+
